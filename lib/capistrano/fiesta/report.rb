@@ -47,7 +47,7 @@ module Capistrano
         end
 
         def merged_pull_requests
-          github.search_issues("base:master repo:#{repo} merged:>#{last_released_at}").items
+          github.search_issues("base:develop repo:#{repo} merged:>#{last_released_at}").items
         rescue Octokit::UnprocessableEntity => e
           Logger.warn "Unable to access GitHub. Message given was: #{e.message}"
           []

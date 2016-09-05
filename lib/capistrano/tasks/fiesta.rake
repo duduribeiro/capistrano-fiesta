@@ -15,7 +15,7 @@ namespace :fiesta do
   task :announce do
     run_locally do
       report.announce(slack_params)
-      report.create_release fetch(:release_timestamp) if fetch(:branch) == 'master'
+      report.create_release fetch(:release_timestamp) if fetch(:branch) == 'develop'
       Capistrano::Fiesta::Logger.logs.each { |log| warn log }
     end
   end

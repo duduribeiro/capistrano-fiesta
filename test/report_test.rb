@@ -26,7 +26,7 @@ module Capistrano::Fiesta
     end
 
     def test_announce
-      query = "base:master repo:balvig/capistrano-fiesta merged:>2015-10-09T14:50:23Z"
+      query = "base:develop repo:balvig/capistrano-fiesta merged:>2015-10-09T14:50:23Z"
       response = { items: [{ title: "New login [Delivers #123]", body: "" }] }
       github = stub_request(:get, "https://api.github.com:443/search/issues").with(query: { q: query }).to_return_json(response)
 
