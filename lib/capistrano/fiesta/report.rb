@@ -15,10 +15,10 @@ module Capistrano
 
       attr_reader :stories, :stepup_notes
 
-      def initialize(github_url, last_release: nil, comment: nil)
+      def initialize(github_url, last_release: nil, comment: nil, notes: nil)
         @github_url, @last_release, @comment = github_url, last_release, comment
         #@stories = merged_pull_requests.map { |pr| Story.new(pr) }
-        @stepup_notes = run_locally("stepup notes --since $(git describe --abbrev=0 --tags)")
+        @stepup_notes = notes
       end
 
       def announce(options = {})

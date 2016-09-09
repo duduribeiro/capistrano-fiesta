@@ -7,8 +7,9 @@ namespace :fiesta do
 
   task :generate do
     run_locally do
-      set :fiesta_report, Capistrano::Fiesta::Report.new(repo_url, last_release: last_release, comment: fetch(:fiesta_comment))
-      info "Deploying #{report.stories.size} new story(ies)"
+      notes = capture("stepup notes --since $(git describe --abbrev=0 --tags)")
+      set :fiesta_report, Capistrano::Fiesta::Report.new(repo_url, last_release: last_release, comment: fetch(:fiesta_comment), notes: notes)
+      info "Deploying new story(ies)"
     end
   end
 
