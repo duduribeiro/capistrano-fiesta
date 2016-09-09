@@ -13,15 +13,16 @@ module Capistrano
         attr_accessor :chat_client
       end
 
-      attr_reader :stories
+      attr_reader :stories, :stepup_notes
 
       def initialize(github_url, last_release: nil, comment: nil)
         @github_url, @last_release, @comment = github_url, last_release, comment
-        @stories = merged_pull_requests.map { |pr| Story.new(pr) }
+        #@stories = merged_pull_requests.map { |pr| Story.new(pr) }
+        @stepup_notes = run_locally("stepup notes --since $(git describe --abbrev=0 --tags)")
       end
 
       def announce(options = {})
-        text = editor.compose if stories.any?
+        text = @stepup_notes
         return Logger.warn('Announcement blank, nothing posted to Slack') if text.nil? || text.empty?
         options[:payload] = options.fetch(:payload, {}).merge(text: text)
         chat.post(options)
